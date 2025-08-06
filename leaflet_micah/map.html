@@ -4,7 +4,7 @@
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Leaflet tutorial</title>
+      <title>Leaflet Map</title>
 
       <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /> -->
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -14,17 +14,19 @@
       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
       <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<!--added swiss leaflet plugin but not working properly?-->
+	  <script src="https://cdn.jsdelivr.net/npm/leaflet-tilelayer-swiss@2.3.0/dist/Leaflet.TileLayer.Swiss.umd.js"
+          crossorigin integrity="sha384-M4p8VfZ8RG6qNiPYA3vOCApQXAlLtnJXVPdydMYPAsvvIDsWp2dqqzF2OEeWWNhy">
+  </script>
       <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-
-      <div>
-            <h1>Leaflet map for drawing features</h1>
-      </div>
       <div id="map" style="height: 600px; width: 100%;"></div>
       <div class="coords">
             <p id="coordinates"></p>
+			<button type="button" onclick="CopyToClipboard('coordinates')">Copy text</button>
+			
       </div>
       <script src="./script.js"></script>
 </body>
