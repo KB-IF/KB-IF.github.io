@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick start</title>
+
+  <!-- Include Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@primer/css@20.4.5/dist/primer.css"
+        crossorigin integrity="sha384-+z2h5Po5C3+LlqauBnMV7SHg4MUWwHZPF8xcJevQIu7hy+PZgn+Fpte9stbQejIi">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+  <style>
+    /* Set full width and height for the map */
+    html, body, #mapid { height: 100%; margin: 0; }
+  </style>
+</head>
+
+<body>
+  <!-- Element where the map will be attached -->
+  <div id="mapid"></div>
+  <div class="coords">
+      <p id="coordinates"></p>
+      <button type="button" onclick="CopyToClipboard('coordinates')">Copy text</button>
+  </div>
+
+<!-- Include Leaflet and Leaflet.TileLayer.Swiss JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+          crossorigin integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-tilelayer-swiss@2.4.0/dist/Leaflet.TileLayer.Swiss.umd.js"
+          crossorigin integrity="sha384-Euk+jolNu4/WKjgaLQzvOYEpbiH0yAN0sErw27A95bn2MnIB1I52o9twSk23yZyL">
+  </script>
+<!-- Include plugin for hash -->
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-hash@0.2.1/leaflet-hash.js"
+          crossorigin integrity="sha384-2V+X2eD8Nz+G+FVKmPS5XkcMt40qrSGaHSoV8Ny7VAvPnHMfnLgrZ6qvNZVJ2ycb">
+  </script>  
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.js"
+          crossorigin integrity="sha384-8VtMW+BflZ1BJajIFHIyWbIIFFwOtQSk9mnRGwGxKAK92i6vUtIz60tUIiA9QSo0">
+  </script>
+<!-- Include geoserver plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <script src="src/L.Geoserver.js"></script>
+<!-- Include draw plugin -->
+  <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+  <!-- Include quick start JavaScript -->
+  <script src="quick-start.js"></script>
+
+
+</body>
+
+</html>
