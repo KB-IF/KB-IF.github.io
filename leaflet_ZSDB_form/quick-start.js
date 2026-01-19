@@ -191,7 +191,7 @@ wfsLayer.addTo(map);
 
 // modified variable to allow for several WFS layers!
 var wfsLayer = L.Geoserver.wfs("https://geo.infofauna.ch/geoserver/zsdb/wfs", {
-  layers: "zsdb:ZSDB_cat_CONFIRMES,zsdb:ZSDB_cat_POTENTIELS",
+  layers: "zsdb:ZSDB_cat_CONFIRMES,zsdb:ZSDB_cat_POTENTIELS,zsdb:ZSDB_cat_SALAMANDRE",
   style: feature => {
 	  let layerID = feature.id.split(".")[0];
 	  if(layerID == "ZSDB_cat_POTENTIELS")
@@ -209,6 +209,14 @@ var wfsLayer = L.Geoserver.wfs("https://geo.infofauna.ch/geoserver/zsdb/wfs", {
 //	  		fillOpacity: "0",
 //	  		opacity: "0.5",
 			fillColor: "#7CCF35",
+		};
+	  }
+	  if(layerID == "ZSDB_cat_SALAMANDRE") {
+		return {
+		color: "#66ccff",
+//	  	fillOpacity: "0",
+//	  	opacity: "0.5",
+		fillColor: "#66ccff",
 		};
 	  }
   },	  

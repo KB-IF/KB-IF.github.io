@@ -2,8 +2,9 @@ Map to display in iframe in form in jotforms for ZSDB site registration
 BASED ON chxgsxhashxdraw
 
 Adaptions:
-- put line for coordinates on top
-- 
+- put line for coordinates on top of html
+- added Salamandre with a fix (still needs proper handling of data) as third WFS layer (CATEGORIE inactif will not be added) 
+
 
 
 --- map base:
