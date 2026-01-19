@@ -1,3 +1,13 @@
+Map to display in iframe in form in jotforms for ZSDB site registration
+BASED ON chxgsxhashxdraw
+
+Adaptions:
+- put line for coordinates on top
+- 
+
+
+--- map base:
+
 - Swiss Tile layer
 - geoserver plugin
 - hash plugin for CH coordinates --> creates popup with point coordinates and "copy to clipboard" - but doesn't show svp icon
