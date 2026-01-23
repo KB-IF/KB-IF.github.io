@@ -2,8 +2,8 @@
 var map = L.map('mapid', {
     minZoom: 13,
     maxZoom: 28,
-  // Use LV95 (EPSG:2056) projection
-  crs: L.CRS.EPSG2056,
+  // Use lv03 (EPSG:21781) projection
+  crs: L.CRS.EPSG21781,
 });
 
 // Add Swiss layer with default options
@@ -13,7 +13,7 @@ L.tileLayer.swiss().addTo(map);
 map.fitSwitzerland();
 
 // Add a marker with a popup in Bern
-//L.marker(L.CRS.EPSG2056.unproject(L.point(2600000, 1200000))).addTo(map)
+//L.marker(L.CRS.EPSG21781.unproject(L.point(2600000, 1200000))).addTo(map)
 //  .bindPopup('Bern')
 //  .openPopup();
 
@@ -30,7 +30,7 @@ hash.update();
 
 if (map.getZoom() === undefined) {
   // Set default view if there was no URL hash
-  map.setView(L.CRS.EPSG2056.unproject(L.point(2600000, 1200000)), 21);
+  map.setView(L.CRS.EPSG21781.unproject(L.point(600000, 200000)), 21);
 }
 
 // Add scale bar on the bottom left
@@ -65,10 +65,10 @@ function addCoordinatesPopupOnClick(map) {
     var popup = L.popup(latlng, {
       content: '<div style="width: 250px;">' +
         renderCoordinates({
-          label: 'LV95 (E, N)',
-          id: 'coordinates-lv95',
-          displayText: formatLv95Coordinates(latlng, NARROW_NO_BREAK_SPACE),
-          clipboardText: formatLv95Coordinates(latlng, '')
+          label: 'LV03 (E, N)',
+          id: 'coordinates-LV03',
+          displayText: formatLv03Coordinates(latlng, NARROW_NO_BREAK_SPACE),
+          clipboardText: formatLv03Coordinates(latlng, '')
 //        }) +
 //        renderCoordinates({
 //          label: 'WGS 84 (latitude, longitude)',
@@ -122,8 +122,8 @@ function addMouseMoveCoordinates(map) {
       container.style.color = '#333';
       container.style.fontFeatureSettings = 'tnum';
       var updateCoordinates = function (latlng) {
-        var formattedCoordinates = formatLv95Coordinates(latlng, NARROW_NO_BREAK_SPACE)
-        container.innerHTML = '<b>LV95 Coordinates (E, N)</b><br>' + formattedCoordinates;
+        var formattedCoordinates = formatLv03Coordinates(latlng, NARROW_NO_BREAK_SPACE)
+        container.innerHTML = '<b>LV03 Coordinates (E, N)</b><br>' + formattedCoordinates;
       };
       map.on('mousemove', function (event) {
         updateCoordinates(event.latlng);
@@ -136,8 +136,24 @@ function addMouseMoveCoordinates(map) {
   new MouseMoveCoordinatesControl().addTo(map);
 }
 
-function formatLv95Coordinates(latlng, separator) {
-  var EN = L.CRS.EPSG2056.project(latlng);
+function formatLv03Coordinates(latlng, separator) {
+  var EN = L.CRS.EPSG21781.project(latlng);
+  var coordinates = [EN.x, EN.y];
+  var formattedCoordinates = coordinates.map(function(coordinate) {
+    var parts = [];
+    coordinate = String(Math.round(coordinate));
+    while (coordinate) {
+      parts.unshift(coordinate.slice(-3));
+      coordinate = coordinate.slice(0, -3);
+    }
+    return parts.join(separator);
+  });
+  return formattedCoordinates.join(', ');
+}
+
+//added old swiss coordinate system
+function formatLv03Coordinates(latlng, separator) {
+  var EN = L.CRS.EPSG21781.project(latlng);
   var coordinates = [EN.x, EN.y];
   var formattedCoordinates = coordinates.map(function(coordinate) {
     var parts = [];
@@ -252,7 +268,6 @@ let drawControl = new L.Control.Draw({
 map.addControl(drawControl)
 
 // function to display coordinates in JSON format 
-//KB: modified structure of marker and polyline, the others are still the originals, but set to fals so they are not loaded
 
 function displayCoordinates(layer) {
       let coordinates = [];
@@ -275,7 +290,7 @@ function displayCoordinates(layer) {
       } else if (layer instanceof L.Polyline) {
             featureType = "LineString";
             layer.getLatLngs().forEach(function (point) {
-				  let xy = L.CRS.EPSG2056.project(point);
+				  let xy = L.CRS.EPSG21781.project(point);
                   coordinates.push([xy.x, xy.y]);
             });
       } else if (layer instanceof L.Marker) {
@@ -299,8 +314,12 @@ function displayCoordinates(layer) {
 				type: featureType,
 				coordinates: coordinates}
       }
-
-      document.getElementById('coordinates').textContent = JSON.stringify(featureInfo, null, 2);
+	  
+	  //changed from json to wkt string
+	  var wkt_string = "LINESTRING (" + coordinates.map(c => (Math.round(c[0]) + " " + Math.round(c[1]))).join(", ") + ")";
+	  document.getElementById('coordinates').textContent = wkt_string;
+	  
+//      document.getElementById('coordinates').textContent = JSON.stringify(featureInfo, null, 2);
       console.log("Feature information:", featureInfo);
 }
 
