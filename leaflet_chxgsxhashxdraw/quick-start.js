@@ -151,6 +151,22 @@ function formatLv95Coordinates(latlng, separator) {
   return formattedCoordinates.join(', ');
 }
 
+//added old swiss coordinate system
+function formatLv03Coordinates(latlng, separator) {
+  var EN = L.CRS.EPSG21781.project(latlng);
+  var coordinates = [EN.x, EN.y];
+  var formattedCoordinates = coordinates.map(function(coordinate) {
+    var parts = [];
+    coordinate = String(Math.round(coordinate));
+    while (coordinate) {
+      parts.unshift(coordinate.slice(-3));
+      coordinate = coordinate.slice(0, -3);
+    }
+    return parts.join(separator);
+  });
+  return formattedCoordinates.join(', ');
+}
+
 function formatWgs84Coordinates(latlng, addSuffix) {
   var coordinates = [latlng.lat, latlng.lng];
   var suffixes = ['°N', '°E'];
@@ -291,8 +307,14 @@ function displayCoordinates(layer) {
 				type: featureType,
 				coordinates: coordinates}
       }
+	  
+	  // creating wkt string
+//	  var wkt_string = "LINESTRING (" + coordinates.map(x => x.join(" ")).join(", ") + ")";
+	  var wkt_string = "LINESTRING (" + coordinates.map(c => (Math.round(c[0]) + " " + Math.round(c[1]))).join(", ") + ")";
 
-      document.getElementById('coordinates').textContent = JSON.stringify(featureInfo, null, 2);
+	  document.getElementById('coordinates').textContent = wkt_string;
+	  
+//      document.getElementById('coordinates').textContent = JSON.stringify(featureInfo, null, 2);
       console.log("Feature information:", featureInfo);
 }
 

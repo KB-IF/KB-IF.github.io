@@ -15,3 +15,10 @@ in addition:
 works 17.11.2025, fixed 08.01.2016
 
 - 19.01.2026: added geoserver WFS for several layers
+- 21.01.2026: 
+	- coordinates.json in src is just for examples and not referenced in the js file --> removed
+	- added function for showing coordinates of old swiss coordinate system: function formatLv03Coordinates(latlng, separator) in addition to formatLv95Coordinates
+	- old swiss coordinates can be used by replacing EPSG2056 with EPSG21781 and LV95 w/ LV03
+	- wkt instead of json: one line to concatenate wkt from coordinate; give this to html 
+	-
+	

@@ -7,7 +7,10 @@ var map = L.map('mapid', {
 });
 
 // Add Swiss layer with default options
-L.tileLayer.swiss().addTo(map);
+L.tileLayer.swiss({
+  layer: 'ch.swisstopo.pixelkarte-grau',
+  maxNativeZoom: 28
+}).addTo(map);
 
 // Center the map on Switzerland
 map.fitSwitzerland();
@@ -179,16 +182,18 @@ function formatWgs84Coordinates(latlng, addSuffix) {
   });
   return formattedCoordinates.join(', ');
 }
-
 // GEOSERVER WMS, WFS
 
 // Add geoserver layers - WMS
-//var wmsLayer = L.Geoserver.wms("https://geo.infofauna.ch/geoserver/wms", {
-//  layers: "zsdb:zsdb_sites_inactive",
-//  maxNativeZoom: 25,
-//  maxZoom: 28
-//});
-//wmsLayer.addTo(map);
+var wmsLayer = L.Geoserver.wms("https://geo.infofauna.ch/geoserver/zsdb/wms", {
+  attribution: "info fauna",
+  layers: "zsdb:ZSDB_cat_POTENTIELS,zsdb:ZSDB_cat_CONFIRMES,zsdb:ZSDB_cat_SALAMANDRE", 
+  CQL_FILTER: "INFRASTRUKTUR_BAHN = 0 OR INFRASTRUKTUR_STRASSE=1;INFRASTRUKTUR_BAHN = 0 OR INFRASTRUKTUR_STRASSE=1;INFRASTRUKTUR_BAHN = 0 OR INFRASTRUKTUR_STRASSE=1",
+  styles: "zsdb:ZSDB_red,zsdb:ZSDB_red,zsdb:ZSDB_red",
+  maxNativeZoom: 25,
+  maxZoom: 28
+});
+wmsLayer.addTo(map);
 
 /*Original wfs  
   var wfsLayer = L.Geoserver.wfs("https://geo.infofauna.ch/geoserver/wfs", {
@@ -205,7 +210,7 @@ function formatWgs84Coordinates(latlng, addSuffix) {
 wfsLayer.addTo(map);
  */
 
-// modified variable to allow for several WFS layers!
+/* // modified variable to allow for several WFS layers!
 var wfsLayer = L.Geoserver.wfs("https://geo.infofauna.ch/geoserver/zsdb/wfs", {
   layers: "zsdb:ZSDB_cat_CONFIRMES,zsdb:ZSDB_cat_POTENTIELS,zsdb:ZSDB_cat_SALAMANDRE",
   style: feature => {
@@ -235,7 +240,7 @@ var wfsLayer = L.Geoserver.wfs("https://geo.infofauna.ch/geoserver/zsdb/wfs", {
 		fillColor: "#66ccff",
 		};
 	  }
-  },	  
+  },	   
 
 
   onEachFeature: function (feature, layer){
@@ -244,7 +249,7 @@ var wfsLayer = L.Geoserver.wfs("https://geo.infofauna.ch/geoserver/zsdb/wfs", {
 	console.log(feature);
 	layer.bindPopup(preamble + ": " + feature.properties.NAME);
 }});
-wfsLayer.addTo(map); 
+wfsLayer.addTo(map); */
 
 // DRAW
 let drawItems = new L.FeatureGroup();
